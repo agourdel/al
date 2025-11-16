@@ -1,0 +1,15 @@
+build/
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+.DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.al_local/
+.al_global/
