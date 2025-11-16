@@ -25,24 +25,7 @@ Cela installera les binaires suivants dans `/usr/local/bin` :
 - `alnote` - Raccourci pour `al note`
 - `allink` - Raccourci pour `al link`
 
-## Configuration de la commande `go`
 
-La commande `al go` nécessite une fonction shell pour changer le répertoire courant. Ajoutez ceci à votre `~/.bashrc` ou `~/.zshrc` :
-
-```bash
-# Fonction pour al go / algo
-function algo() {
-    local target_path=$(al go "$@" 2>/dev/null)
-    if [ $? -eq 0 ] && [ -n "$target_path" ]; then
-        cd "$target_path"
-    else
-        al go "$@"
-    fi
-}
-
-# Alias pour utiliser al go
-alias alg='algo'
-```
 
 ## Commandes
 
