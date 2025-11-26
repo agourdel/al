@@ -16,7 +16,7 @@ import (
 
 	"github.com/atotto/clipboard"
 	"golang.org/x/crypto/pbkdf2"
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 const (
@@ -90,7 +90,7 @@ func FindSimilarStrings(target string, candidates []string, maxDistance int) []s
 // ReadPassword reads a password from stdin without echoing
 func ReadPassword(prompt string) (string, error) {
 	fmt.Print(prompt)
-	bytePassword, err := terminal.ReadPassword(int(syscall.Stdin))
+	bytePassword, err := term.ReadPassword(int(syscall.Stdin))
 	fmt.Println()
 	if err != nil {
 		return "", err

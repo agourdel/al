@@ -71,15 +71,17 @@ var linkRemoveCmd = &cobra.Command{
 func init() {
 	// Add flags
 	linkCmd.PersistentFlags().StringVarP(&linkTarget, "target", "t", "", "Target project")
+	
 	linkAddCmd.Flags().StringVarP(&linkURL, "url", "u", "", "Link URL (required)")
 	linkAddCmd.Flags().StringVarP(&linkKeywords, "keywords", "k", "", "Keywords separated by |")
 	linkAddCmd.MarkFlagRequired("url")
-	linkGetCmd.Flags().BoolVar(&linkCopy, "cp", false, "Copy to clipboard")
+
+	linkGetCmd.Flags().BoolVarP(&linkCopy, "copy", "c", false, "Copy to clipboard")
+
 	linkEditCmd.Flags().StringVarP(&linkURL, "url", "u", "", "New URL")
-	linkEditCmd.Flags().StringVar(&linkAddKeywords, "add_keyword", "", "Add keywords")
-	linkEditCmd.Flags().StringVar(&linkAddKeywords, "ak", "", "Add keywords (short)")
-	linkEditCmd.Flags().StringVar(&linkResetKeywords, "reset_keyword", "", "Reset keywords")
-	linkEditCmd.Flags().StringVar(&linkResetKeywords, "rk", "", "Reset keywords (short)")
+	linkEditCmd.Flags().StringVarP(&linkAddKeywords, "add_keyword", "a", "", "Add keywords")
+	linkEditCmd.Flags().StringVarP(&linkResetKeywords, "reset_keyword", "r", "", "Reset keywords")
+	
 
 	// Add subcommands
 	linkCmd.AddCommand(linkListCmd)
@@ -136,7 +138,7 @@ func saveLink(projectPath string, link *Link) error {
 		return err
 	}
 
-	return os.WriteFile(linkPath, data, 0644)
+	return os.WriteFile(linkPath, data, 0600)
 }
 
 func listLinks(projectPath string) ([]Link, error) {
@@ -304,15 +306,11 @@ func runLinkGet(cmd *cobra.Command, args []string) error {
 		if err := utils.CopyToClipboard(link.URL); err != nil {
 			return err
 		}
-		fmt.Println("✓ Link copied to clipboard")
-	} else {
-		fmt.Printf("Name: %s\n", link.Name)
-		fmt.Printf("URL: %s\n", link.URL)
-		if len(link.Keywords) > 0 {
-			fmt.Printf("Keywords: %s\n", strings.Join(link.Keywords, ", "))
-		}
-	}
-
+		
+	} 
+		
+	fmt.Printf("URL: %s | (%s)\n", link.URL, strings.Join(link.Keywords, ", "))
+	
 	return nil
 }
 

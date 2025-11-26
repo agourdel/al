@@ -132,7 +132,7 @@ func saveNote(projectPath string, note *Note) error {
 		return err
 	}
 
-	return os.WriteFile(notePath, data, 0644)
+	return os.WriteFile(notePath, data, 0600)
 }
 
 func listNotes(projectPath string) ([]Note, error) {
@@ -249,7 +249,7 @@ func runNoteAdd(cmd *cobra.Command, args []string) error {
 	} else {
 		// Create temporary file for editing
 		tmpFile := filepath.Join(os.TempDir(), "al_note_"+noteName+".txt")
-		if err := os.WriteFile(tmpFile, []byte(""), 0644); err != nil {
+		if err := os.WriteFile(tmpFile, []byte(""), 0600); err != nil {
 			return err
 		}
 		defer os.Remove(tmpFile)
@@ -381,7 +381,7 @@ func runNoteEdit(cmd *cobra.Command, args []string) error {
 	} else {
 		// Create temporary file for editing
 		tmpFile := filepath.Join(os.TempDir(), "al_note_"+noteName+".txt")
-		if err := os.WriteFile(tmpFile, []byte(content), 0644); err != nil {
+		if err := os.WriteFile(tmpFile, []byte(content), 0600); err != nil {
 			return err
 		}
 		defer os.Remove(tmpFile)
